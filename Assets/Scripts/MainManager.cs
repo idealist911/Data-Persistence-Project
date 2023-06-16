@@ -10,6 +10,7 @@ public class MainManager : MonoBehaviour
     public int LineCount = 6;
     public Rigidbody Ball;
 
+    Button menuButton;
     public Text ScoreText;
     public GameObject GameOverText;
     Text HiScoreText;
@@ -26,6 +27,9 @@ public class MainManager : MonoBehaviour
     {
         GeneralManager.instance.LoadPlayerDetails();
         ShowHighScore();
+
+        menuButton = GameObject.Find("MenuButton").GetComponent<Button>();
+        menuButton.onClick.AddListener(GoToMenu);
 
         const float step = 0.6f;
         int perLine = Mathf.FloorToInt(4.0f / step);
@@ -95,5 +99,11 @@ public class MainManager : MonoBehaviour
 
         HiScoreText = GameObject.Find("HiScoreText").GetComponent<Text>();
         HiScoreText.text = $"Best Score : {name} : {hiscore}";
+    }
+
+    public void GoToMenu()
+    {
+        GameOver(); // Start game over sequence
+        SceneManager.LoadScene(GeneralManager.scenes["menu"]);
     }
 }

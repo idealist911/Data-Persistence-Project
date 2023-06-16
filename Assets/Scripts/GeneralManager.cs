@@ -7,6 +7,12 @@ using UnityEngine;
 public class GeneralManager : MonoBehaviour
 {
     public static GeneralManager instance;
+
+    public static Dictionary<string, int> scenes = new Dictionary<string, int>()
+    {
+        { "menu" , 0 },
+        { "main" , 1 }
+    };
     public string playername;
     public string currentPlayername;
     public int hiscore;

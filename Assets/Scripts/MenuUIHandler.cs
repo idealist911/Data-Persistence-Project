@@ -10,15 +10,12 @@ using TMPro;
 [DefaultExecutionOrder(1000)]
 public class MenuUIHandler : MonoBehaviour
 {
-    Dictionary<string, int> scenes = new Dictionary<string, int>()
-    {
-        { "menu" , 0 },
-        { "main" , 1 }
-    };
+    
 
     Button startButton;
     Button quitButton;
-    public TMP_InputField nameInputField;
+    TMP_InputField nameInputField;
+    GameObject errorText;
 
     
 
@@ -31,6 +28,8 @@ public class MenuUIHandler : MonoBehaviour
         quitButton.onClick.AddListener(Exit);
         nameInputField = GameObject.Find("NameInputField").GetComponent<TMP_InputField>();
         nameInputField.onEndEdit.AddListener(LockInput);
+        errorText = GameObject.Find("ErrorText");
+        errorText.SetActive(false);
     }
 
     // Update is called once per frame
@@ -44,11 +43,14 @@ public class MenuUIHandler : MonoBehaviour
     {
         if (GeneralManager.instance.currentPlayername == "")
         {
-            Debug.Log("Required field: player name");
+            string errorMsg = "Required field: player name";
+            errorText.SetActive(true);
+            errorText.GetComponent<TMP_Text>().text = errorMsg;
+            //Debug.Log(errorMsg);
         }
         else
         {
-            SceneManager.LoadScene(scenes["main"]);
+            SceneManager.LoadScene(GeneralManager.scenes["main"]);
         }
         
     }
